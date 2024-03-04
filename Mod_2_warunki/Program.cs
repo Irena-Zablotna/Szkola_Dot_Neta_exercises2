@@ -1,5 +1,6 @@
 ﻿using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Numerics;
+using System.Drawing;
 
 namespace Mod_2_warunki
 {
@@ -131,7 +132,81 @@ namespace Mod_2_warunki
             {
                 Console.WriteLine($"{year} is not a leap year.");
             }
-                Console.ReadKey();
+
+            // exercise 5.
+            Console.WriteLine("Exercise 5 - age");
+            Console.WriteLine("How old are you");
+            isValidInput = false;
+            int age = 0;
+            while (!isValidInput)
+            {
+                if (int.TryParse(Console.ReadLine(), out age))
+                {
+                        isValidInput = true;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter only numbers.");
+                }
+            }
+            if (age>21)
+            {
+                Console.WriteLine(" You are over 21 years old, you can become a member of parliament");
+            }
+            else
+            {
+                Console.WriteLine("You cannot become a member of parliament yet, you are too young ");
+            }
+
+            //Exercise 6
+            Console.WriteLine("Exercise 6 - height");
+            Console.WriteLine("How tall are you? (You can enter the height in centimeters (e.g. 170cm) or meters (e.g. 1.70m)):");
+            string input = Console.ReadLine().ToLower();
+            isValidInput = false;
+            double heightInCentimeters =0.0;
+            while (!isValidInput)
+            {
+                if (input.EndsWith("cm"))
+                {
+                    if (double.TryParse(input.Replace("cm", ""), out heightInCentimeters))
+                    {
+                        isValidInput = true;
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid height.");
+                    }
+                }
+                else if (input.EndsWith("m"))
+                {
+                    double heightInMeters;
+                    if (double.TryParse(input.Replace("m", ""), out heightInMeters))
+                    {
+                        heightInCentimeters = heightInMeters * 100;
+                        isValidInput = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid height.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input format. Please enter the height in centimeters (e.g. 170cm) or meters (e.g. 1.70m).");
+                     input = Console.ReadLine().ToLower();
+                }
+            }
+           
+            Console.WriteLine(heightInCentimeters switch
+            {
+                < 140 => "You're vertically challenged.",
+                < 180 => "Your height is normal",
+                > 180 => "You are tall",
+                _ => "goodbye"
+            });
+
+            Console.ReadKey();
         }
     }
 }
